@@ -2,12 +2,87 @@
    import ReactDOM from 'react-dom';
    import './index.css';
 
-    const Square = (props) => {
-      return (
-        <button className="square" onClick={props.onClick}>
-          {props.value}
-        </button>
-      );
+    // const Btn = (props) => {
+    //   return (
+    //     <button className="btn">
+    //       {props}
+    //     </button>
+    //   );
+    // }
+
+  const getNowHour = ()=>{
+    const date1 = new Date();
+    const dateCommute = date1.getHours() + ":" + date1.getMinutes();
+    return dateCommute
+  }
+
+  class Main extends React.Component {
+    constructor(props){
+      super(props);
+        this.state = {
+          isCommute: false,
+          commuteTime:'',
+          isLeft: false,
+          leftTime:'',
+        };
+    }
+    
+    commuteClick(){
+      if(this.state.isCommute){
+        alert("already commuted");
+        return;
+      }
+      this.setState({
+        isCommute: !this.state.isCommute,
+        commuteTime:getNowHour(),
+      });
+      alert(`${getNowHour()} successfully completed`);
+    };
+    leaveClick(){
+      if(!this.state.isCommute || this.state.isLeft){
+        alert("already left");
+        return;
+      }
+      this.setState({
+        isLeft: !this.state.isLeft,
+        leftTime:getNowHour(),
+      });
+      alert(`${getNowHour()} successfully completed`);
+    };
+    renderButton(btn){
+      if(btn==="Commute"){
+        return (
+          <button className="btn" onClick={()=>this.commuteClick()}>
+              {btn}
+          </button>
+        );
+      }else{
+        return (
+          <button className="btn" onClick={()=>this.leaveClick()}>
+              {btn}
+          </button>
+        );
+      }
+    }
+    render(){
+        const title = "Attendance App";
+        const commuting = "Commute";
+        const leaving = "Leave";
+
+        return (
+          <div>
+            <div className = 'title'>{title}</div>
+            <div className = 'time'>
+              <div>commute：{this.state.commuteTime}</div>
+              <div>leave：{this.state.leftTime}</div>
+            </div>
+            <div className = 'buttonContainer'>
+                {this.renderButton(commuting)}
+                {this.renderButton(leaving)}
+            </div>
+          </div>
+        );
+      }
     }
     // class Square extends React.Component {
     //   render() {
@@ -22,38 +97,38 @@
     //   }
     // }
 
-    class Board extends React.Component {
-      renderSquare(i) {
-        return (
-          <Square
-            value={this.props.squares[i]}
-            onClick={() => this.props.onClick(i)}
-          />
-        );
-      }
+    // class Board extends React.Component {
+    //   renderSquare(i) {
+    //     return (
+    //       <Square
+    //         value={this.props.squares[i]}
+    //         onClick={() => this.props.onClick(i)}
+    //       />
+    //     );
+    //   }
 
-      render() {
-        return (
-          <div>
-            <div className="board-row">
-              {this.renderSquare(0)}
-              {this.renderSquare(1)}
-              {this.renderSquare(2)}
-            </div>
-            <div className="board-row">
-              {this.renderSquare(3)}
-              {this.renderSquare(4)}
-              {this.renderSquare(5)}
-            </div>
-            <div className="board-row">
-              {this.renderSquare(6)}
-              {this.renderSquare(7)}
-              {this.renderSquare(8)}
-            </div>
-          </div>
-        );
-      }
-    }
+    //   render() {
+    //     return (
+    //       <div>
+    //         <div className="board-row">
+    //           {this.renderSquare(0)}
+    //           {this.renderSquare(1)}
+    //           {this.renderSquare(2)}
+    //         </div>
+    //         <div className="board-row">
+    //           {this.renderSquare(3)}
+    //           {this.renderSquare(4)}
+    //           {this.renderSquare(5)}
+    //         </div>
+    //         <div className="board-row">
+    //           {this.renderSquare(6)}
+    //           {this.renderSquare(7)}
+    //           {this.renderSquare(8)}
+    //         </div>
+    //       </div>
+    //     );
+    //   }
+    // }
 
 //     class Game extends React.Component {
 //       constructor(props){
@@ -152,7 +227,7 @@
 // }
 //     // ========================================
 
-//     ReactDOM.render(
-//       <Game />,
-//       document.getElementById('root')
-//     );
+    ReactDOM.render(
+      <Main />,
+      document.getElementById('root')
+    );

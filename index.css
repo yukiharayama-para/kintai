@@ -43,3 +43,7 @@
       border: none;
       display: inline-block;
     }
+
+    .inview{
+      background-color:#BDBDBD;
+    }

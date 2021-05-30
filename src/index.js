@@ -4,10 +4,7 @@ import './index.css';
 
 const toDoubleDigits = (num) => {
     num += "";
-    if (num.length === 1) {
-        num = "0" + num;
-    }
-    return num;
+    return num.length === 1? "0" + num: num;
 };
 // 日付をHH:MI形式で取得
 const getNowHour = () => {

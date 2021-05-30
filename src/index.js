@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 const toDoubleDigits = (num) => {
-    num += "";
-    return num.length === 1? "0" + num: num;
+    return num.toString().length === 1 ? "0" + num : num;
 };
-// 日付をHH:MI形式で取得
+
 const getNowHour = () => {
     const date = new Date();
     const hh = toDoubleDigits(date.getHours());
@@ -50,8 +49,9 @@ class Main extends React.Component {
             </button>
         );
     }
-    createBtnName(bool){
-        return bool? "btn" : "btn disable";
+
+    createBtnName(bool) {
+        return bool ? "btn" : "btn disable";
     }
 
     render() {
@@ -61,7 +61,6 @@ class Main extends React.Component {
         const onClickLeave = () => this.clickBtn('leftTime');
         const btnNameCommute = this.createBtnName(!disableCommute);
         const btnNameLeave = this.createBtnName(!disableLeave);
-
 
         return (
             <div>

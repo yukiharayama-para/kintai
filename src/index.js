@@ -54,7 +54,7 @@ class Main extends React.Component {
         );
     }
     createBtnName(bool){
-        return bool? "btn" : "btn inview";
+        return bool? "btn" : "btn disable";
     }
 
     render() {

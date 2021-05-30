@@ -53,14 +53,18 @@ class Main extends React.Component {
             </button>
         );
     }
+    createBtnName(bool){
+        return bool? "btn" : "btn inview";
+    }
 
     render() {
         const disableCommute = this.canCommute();
         const disableLeave = this.canLeft();
         const onClickCommute = () => this.clickBtn('commuteTime');
         const onClickLeave = () => this.clickBtn('leftTime');
-        const btnNameCommute = !disableCommute ? "btn" : "btn inview";
-        const btnNameLeave = !disableLeave ? "btn" : "btn inview";
+        const btnNameCommute = this.createBtnName(!disableCommute);
+        const btnNameLeave = this.createBtnName(!disableLeave);
+
 
         return (
             <div>

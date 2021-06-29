@@ -49,7 +49,7 @@ class Main extends React.Component {
         const curTime = getNowHour()
         this.setState({
             leftTime: curTime,
-            titleDisplayText: `commuteTime: ${curTime}`
+            titleDisplayText: `leftTime: ${curTime}`
         });
         alert(`${curTime} successfully completed`);
     };

@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+import {title} from "./components/title";
+import {actionHistory} from "./components/actionHistory";
+import {actionButton} from "./components/actionButton";
+
 const toDoubleDigits = (num) => {
     return num.toString().length === 1 ? "0" + num : num;
 };
@@ -19,6 +23,7 @@ class Main extends React.Component {
         this.state = {
             commuteTime: '',
             leftTime: '',
+            titleDisplayText: 'Attendance App'
         };
     }
 
@@ -34,44 +39,32 @@ class Main extends React.Component {
         return [!this.canCommute(), this.isExistLeftTime()].some(bool => bool)
     }
 
-    clickBtn(state) {
-        const curTime = getNowHour();
+    onClickCommute = () => {
+        const curTime = getNowHour()
         this.setState({
-            [state]: curTime,
+            commuteTime: curTime,
+            titleDisplayText: `commuteTime: ${curTime}`
         });
         alert(`${curTime} successfully completed`);
     };
 
-    creatBtnComponent(name, classNm, idName, disabledFunc, onClickFunc) {
-        return (
-            <button className={classNm} id={idName} disabled={disabledFunc} onClick={onClickFunc}>
-                {name}
-            </button>
-        );
-    }
-
-    createBtnName(bool) {
-        return bool ? "btn" : "btn disable";
-    }
+    onClickLeave = () => {
+        const curTime = getNowHour()
+        this.setState({
+            leftTime: curTime,
+            titleDisplayText: `commuteTime: ${curTime}`
+        });
+        alert(`${curTime} successfully completed`);
+    };
 
     render() {
-        const disableCommute = this.canCommute();
-        const disableLeave = this.canLeft();
-        const onClickCommute = () => this.clickBtn('commuteTime');
-        const onClickLeave = () => this.clickBtn('leftTime');
-        const btnNameCommute = this.createBtnName(!disableCommute);
-        const btnNameLeave = this.createBtnName(!disableLeave);
-
         return (
             <div>
-                <div className='title'>Attendance App</div>
-                <div className='time'>
-                    <div>commute：{this.state.commuteTime}</div>
-                    <div>leave：{this.state.leftTime}</div>
-                </div>
+                {title(this.state.titleDisplayText)}
+                {actionHistory(this.state.commuteTime, this.state.leftTime)}
                 <div className='buttonContainer'>
-                    {this.creatBtnComponent("Commute", btnNameCommute, "commute", disableCommute, onClickCommute)}
-                    {this.creatBtnComponent("Leave", btnNameLeave, "leaving", disableLeave, onClickLeave)}
+                    {actionButton("Commute", this.canCommute(), this.onClickCommute)}
+                    {actionButton("Leave", this.canLeft(), this.onClickLeave)}
                 </div>
             </div>
         );

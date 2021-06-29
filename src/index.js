@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Btn from "./components/Btn";
+import Time from "./components/Time";
+import IndexView from "./views/Index.view";
 
 const toDoubleDigits = (num) => {
     return num.toString().length === 1 ? "0" + num : num;
@@ -22,56 +25,42 @@ class Main extends React.Component {
         };
     }
 
-    canCommute() {
-        return Boolean(this.state.commuteTime);
-    };
+    canCommute = () => Boolean(this.state.commuteTime);
 
-    isExistLeftTime() {
-        return Boolean(this.state.leftTime);
-    }
+    isExistLeftTime = () => Boolean(this.state.leftTime);
 
-    canLeft() {
-        return [!this.canCommute(), this.isExistLeftTime()].some(bool => bool)
-    }
+    canLeft = () => [!this.canCommute(), this.isExistLeftTime()].some(bool => bool);
 
-    clickBtn(state) {
+    setCommuteTime = () => {
+        const f = () => {}
         const curTime = getNowHour();
         this.setState({
-            [state]: curTime,
+            commuteTime: curTime,
         });
         alert(`${curTime} successfully completed`);
     };
 
-    creatBtnComponent(name, classNm, idName, disabledFunc, onClickFunc) {
-        return (
-            <button className={classNm} id={idName} disabled={disabledFunc} onClick={onClickFunc}>
-                {name}
-            </button>
-        );
-    }
+    setLeftTime = () => {
+        const curTime = getNowHour();
+        this.setState({
+            leftTime: curTime,
+        });
+        alert(`${curTime} successfully completed`);
+    };
 
-    createBtnName(bool) {
-        return bool ? "btn" : "btn disable";
-    }
+    handleView = () => ({
+        default: IndexView
+    });
 
     render() {
-        const disableCommute = this.canCommute();
-        const disableLeave = this.canLeft();
-        const onClickCommute = () => this.clickBtn('commuteTime');
-        const onClickLeave = () => this.clickBtn('leftTime');
-        const btnNameCommute = this.createBtnName(!disableCommute);
-        const btnNameLeave = this.createBtnName(!disableLeave);
-
         return (
+            // <IndexView/>
             <div>
                 <div className='title'>Attendance App</div>
-                <div className='time'>
-                    <div>commute：{this.state.commuteTime}</div>
-                    <div>leave：{this.state.leftTime}</div>
-                </div>
+                {Time(this.state.commuteTime, this.state.leftTime)}
                 <div className='buttonContainer'>
-                    {this.creatBtnComponent("Commute", btnNameCommute, "commute", disableCommute, onClickCommute)}
-                    {this.creatBtnComponent("Leave", btnNameLeave, "leaving", disableLeave, onClickLeave)}
+                    {Btn("Commute", this.canCommute(), this.setCommuteTime)}
+                    {Btn("Leave", this.canLeft(), this.setLeftTime)}
                 </div>
             </div>
         );

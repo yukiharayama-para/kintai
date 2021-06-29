@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Body from "./viewrs/render";
+import Body from "./viewrs/body";
 
 const toDoubleDigits = (num) => {
     return num.toString().length === 1 ? "0" + num : num;

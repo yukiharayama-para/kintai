@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
-import {title} from "./components/title";
-import {actionHistory} from "./components/actionHistory";
-import {actionButton} from "./components/actionButton";
+import Body from "./viewrs/render";
 
 const toDoubleDigits = (num) => {
     return num.toString().length === 1 ? "0" + num : num;
@@ -58,16 +55,17 @@ class Main extends React.Component {
     };
 
     render() {
-        return (
-            <div>
-                {title(this.state.titleDisplayText)}
-                {actionHistory(this.state.commuteTime, this.state.leftTime)}
-                <div className='buttonContainer'>
-                    {actionButton("Commute", this.canCommute(), this.onClickCommute)}
-                    {actionButton("Leave", this.canLeft(), this.onClickLeave)}
-                </div>
-            </div>
-        );
+        return Body(this);
+        // return (
+        //     <div>
+        //         {title(this.state.titleDisplayText)}
+        //         {actionHistory(this.state.commuteTime, this.state.leftTime)}
+        //         <div className='buttonContainer'>
+        //             {actionButton("Commute", this.canCommute(), this.onClickCommute)}
+        //             {actionButton("Leave", this.canLeft(), this.onClickLeave)}
+        //         </div>
+        //     </div>
+        // );
     }
 }
 
